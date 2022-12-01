@@ -39,7 +39,7 @@ Program Main
 ! Split the domain among the processors in a load balanced method 
     npts_local = npts/nprocs
     remeinder = mod(npts,nprocs)
-    If(myid .lt. remeinder) then
+    If(myid .LT. remeinder) then
         npts_local = npts_local + 1
         start_indx = (myid*npts_local) + 1
         end_indx = start_indx + npts_local - 1
@@ -112,13 +112,18 @@ Program Main
                 T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
             Enddo
         Endif
+		
     Enddo
 
     Call MPI_Barrier(MPI_COMM_WORLD,ierr)
-    if(myid .EQ. 0) write(6,*) "-------------- Final Answer ---------------"
-    Do i=start_indx,end_indx
-        write(6,*) "T(",i,") = ",T_new(i)
-    Enddo
+
+    If(debug_version .EQ. 1) then
+        If(myid .EQ. 0) write(6,*) "-------------- Final Answer ---------------"
+            Do i=start_indx,end_indx
+                write(6,*) "T(",i,") = ",T_new(i)
+            Enddo
+            Call flush(6)
+    Endif
 
     Deallocate(T_old)
     Deallocate(T_new)
