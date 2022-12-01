@@ -14,7 +14,7 @@ Program Main
     Real(kind=8) :: Total_time,length,dx,dt,alpha,r
     Real(kind=8) :: T_left,T_right,T_initial
     Real(kind=8) :: ghost_left,ghost_right
-    Integer :: request_left,request_right,ierr,myid,nprocs,debug_version
+    Integer :: request_left,request_right,ierr,myid,nprocs
     Integer,Dimension(MPI_STATUS_SIZE) :: status_left,status_right
 
 ! Initialize MPI and call rank and size functions
@@ -23,7 +23,6 @@ Program Main
     Call MPI_COMM_RANK(MPI_COMM_WORLD, myid  , ierr)
 
 ! Set the problem parameters
-    debug_version = 1
     length = 1.0
     Total_time = 10.0
     npts = 10
@@ -46,11 +45,6 @@ Program Main
     Else
         start_indx = (myid * npts_local) + remeinder + 1
         end_indx = start_indx + npts_local - 1
-    Endif
-
-    If(debug_version .EQ. 1) then
-        write(6,'(a,I0,a,I0,a,I0)') "My ID :",myid,"  ||  Start Index:",start_indx,"  ||  End Index:",end_indx
-        call flush(6)
     Endif
 
 ! Allocate the variables
@@ -112,12 +106,6 @@ Program Main
                 T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
             Enddo
         Endif
-    Enddo
-
-    Call MPI_Barrier(MPI_COMM_WORLD,ierr)
-    if(myid .EQ. 0) write(6,*) "-------------- Final Answer ---------------"
-    Do i=start_indx,end_indx
-        write(6,*) "T(",i,") = ",T_new(i)
     Enddo
 
     Deallocate(T_old)
