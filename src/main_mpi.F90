@@ -62,35 +62,71 @@ Program Main
 
 ! Set initial condition
     Do i=start_indx,end_indx
-        T_new(i) = T_initial
+        T_new(i) = T_initial + i
         x(i) = (i-1)*dx
     Enddo
 
 ! Set boundary condition
     If(myid .EQ. 0) T_new(start_indx) = T_left
     If(myid .EQ. (nprocs-1)) T_new(end_indx) = T_right
+	
+	If(debug_version .EQ. 1) then
+        If(myid .EQ. 0) write(6,*) "-------------- Initial Condition ---------------"
+            Do i=start_indx,end_indx
+                write(6,*) "T(",i,") = ",T_new(i)
+            Enddo
+            Call flush(6)
+    Endif
 
     Do it = 1,ntime
     
         Call MPI_Barrier(MPI_COMM_WORLD,ierr)
-        T_old = T_new
+		!If(debug_version .EQ. 1) then
+		!	write(6,'(a,I0,a)') "Myid :",myid,"  || Inside Loop after MPI_Barrier"
+		!	call flush(6)
+		!Endif
+		Do i=start_indx,end_indx
+			T_old(i) = T_new(i)
+		Enddo
         If(myid .EQ. 0) then
+			!Call MPI_Send(T_new(end_indx), 1, MPI_DOUBLE, myid+1, myid  , MPI_COMM_WORLD, ierr)
+			!Call MPI_Recv(ghost_right    , 1, MPI_DOUBLE, myid+1, myid+1, MPI_COMM_WORLD, ierr)
             Call MPI_Isend(T_new(end_indx),1,MPI_DOUBLE,myid+1,myid,MPI_COMM_WORLD,request_right,ierr)
-            Call MPI_Irecv(ghost_right,1,MPI_DOUBLE,myid+1,myid+1,MPI_COMM_WORLD,status_right,ierr)
+            Call MPI_Irecv(ghost_right,1,MPI_DOUBLE,myid+1,myid+1,MPI_COMM_WORLD,request_right,ierr)
             Call MPI_Wait(request_right,status_right,ierr)
+			If(debug_version .EQ. 1) then
+				write(6,'(a,I0,a)') "Myid :",myid,"  || Completed send and receive"
+				call flush(6)
+			Endif
         Elseif(myid .EQ. (nprocs-1)) then
+			!Call MPI_Send(T_new(end_indx), 1, MPI_DOUBLE, myid-1, myid  , MPI_COMM_WORLD, ierr)
+            !Call MPI_Recv(ghost_left	 , 1, MPI_DOUBLE, myid-1, myid-1, MPI_COMM_WORLD, ierr)
             Call MPI_Isend(T_new(end_indx),1,MPI_DOUBLE,myid-1,myid,MPI_COMM_WORLD,request_left,ierr)
-            Call MPI_Irecv(ghost_left,1,MPI_DOUBLE,myid-1,myid-1,MPI_COMM_WORLD,status_left,ierr)
+            Call MPI_Irecv(ghost_left,1,MPI_DOUBLE,myid-1,myid-1,MPI_COMM_WORLD,request_left,ierr)
             Call MPI_Wait(request_left,status_left,ierr)
+			If(debug_version .EQ. 1) then
+				write(6,'(a,I0,a)') "Myid :",myid,"  || Completed send and receive"
+				call flush(6)
+			Endif
         Else
+			!Call MPI_Send(T_new(end_indx), 1, MPI_DOUBLE, myid+1, myid  , MPI_COMM_WORLD, ierr)
+			!Call MPI_Send(T_new(end_indx), 1, MPI_DOUBLE, myid-1, myid  , MPI_COMM_WORLD, ierr)
+			!Call MPI_Recv(ghost_right    , 1, MPI_DOUBLE, myid+1, myid+1, MPI_COMM_WORLD, ierr)
+            !Call MPI_Recv(ghost_left	 , 1, MPI_DOUBLE, myid-1, myid-1, MPI_COMM_WORLD, ierr)
             Call MPI_Isend(T_new(start_indx),1,MPI_DOUBLE,myid-1,myid,MPI_COMM_WORLD,request_right,ierr)
             Call MPI_Isend(T_new(end_indx),1,MPI_DOUBLE,myid+1,myid,MPI_COMM_WORLD,request_left,ierr)
-            Call MPI_Irecv(ghost_right,1,MPI_DOUBLE,myid+1,myid+1,MPI_COMM_WORLD,status_right,ierr)
-            Call MPI_Irecv(ghost_left,1,MPI_DOUBLE,myid-1,myid-1,MPI_COMM_WORLD,status_left,ierr)
+            Call MPI_Irecv(ghost_right,1,MPI_DOUBLE,myid+1,myid+1,MPI_COMM_WORLD,request_right,ierr)
+            Call MPI_Irecv(ghost_left,1,MPI_DOUBLE,myid-1,myid-1,MPI_COMM_WORLD,request_left,ierr)
             Call MPI_Wait(request_right,status_right,ierr)
             Call MPI_Wait(request_left,status_left,ierr)
+			If(debug_version .EQ. 1) then
+				write(6,'(a,I0,a)') "Myid :",myid,"  || Completed send and receive"
+				call flush(6)
+			Endif
         Endif
-    
+		call flush(6)
+		Call MPI_Barrier(MPI_COMM_WORLD,ierr)
+		
         If(myid .EQ. 0) then
             Do i=start_indx+1,end_indx
                 If(i .EQ. end_indx) then
