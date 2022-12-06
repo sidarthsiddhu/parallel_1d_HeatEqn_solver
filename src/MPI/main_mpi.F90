@@ -13,7 +13,7 @@ Program Main
     Real(kind=8) :: Total_time,length,dx,dt,alpha,r
     Real(kind=8) :: T_left,T_right,T_initial,T_exact,error,error_max
     Real(kind=8) :: ghost_left,ghost_right,time_start,time_end,time_elapsed
-    Integer :: ierr,myid,nprocs,debug_version,remeinder
+    Integer :: ierr,myid,nprocs,debug_version,remeinder,print_freq,print_result
     Integer,Dimension(MPI_STATUS_SIZE) :: status_right,status_left
 
 ! Initialize MPI and call rank and size functions
@@ -21,28 +21,33 @@ Program Main
     Call MPI_COMM_SIZE(MPI_COMM_WORLD, nprocs, ierr)
     Call MPI_COMM_RANK(MPI_COMM_WORLD, myid  , ierr)
 
-! Set the problem parameters
-    debug_version = 0
-    length = 10.0
-    Total_time = 10.0
-    npts = 10000
-    alpha = 5.0
+! Set code debug parameters
+    debug_version = 1
+	print_result = 0
+	print_freq = ntime/10
+	
+! Set the problem parameters	
+	ntime = 10
+    npts = 5*(10**8)
+    dx = 1e-03
+	dt = 1e-03
+	r = 0.5
+	alpha = r*(dx**2)/dt
     T_left = 0.0 
     T_right = 0.0
     T_initial = 50.0
 	T_exact = 0.0
 	error = 0.0
-	r = 0.5
-	dx = length/real(npts)
-	dt = r*(dx**2)/(alpha)
-	ntime = CEILING(Total_time/dt)
-    
 	
+	length = real(npts)*dx
+	Total_time = real(ntime)*dt
+
+! Print out problem parameters
 	If(myid .EQ. 0) then
 		write(6,'(a75)') " --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] --- "
 		write(6,'(a75)') " --------------------- Problem Parameters -------------------------- "
-		write(6,'(a34,F12.4,a)') " Length: ",length," meters"
-		write(6,'(a34,F12.4,a)') " Total simulation time: ",Total_time," seconds"
+		write(6,'(a34,ES12.5,a)') " Length: ",length," meters"
+		write(6,'(a34,ES12.5,a)') " Total simulation time: ",Total_time," seconds"
 		write(6,'(a34,ES12.5,a)') " dt: ",dt," seconds"
 		write(6,'(a34,ES12.5,a)') " dx: ",dx," meters"
 		write(6,'(a34,I0,a)') " Number of points (spatial): ",npts," Point(s)"
@@ -53,6 +58,7 @@ Program Main
 		write(6,*) ""
 		Call flush(6)
 	Endif
+	
 	Call MPI_Barrier(MPI_COMM_WORLD,ierr)
 
 ! Split the domain among the processors in a load balanced method 
@@ -87,11 +93,11 @@ Program Main
 	
 ! Calculate initial RMS error from exact solution
 	Do i = start_indx,end_indx
-		error = error + (T_new(i) - T_exact)**2
+		error = error + ABS(T_new(i) - T_exact)
 	Enddo
-	error = SQRT(error)/npts_local
+	error = (error/npts_local)
 	Call MPI_Reduce(error,error_max,1,MPI_DOUBLE_PRECISION,MPI_MAX,0,MPI_COMM_WORLD,ierr)
-	If(myid .EQ. 0) write(6,'(a,f12.4)') "The Initial RMS Error is: ",error_max
+	If(myid .EQ. 0) write(6,'(a,ES12.5)') "The Initial RMS Error is: ",error_max
 	
 ! Reset Error value for final calculation
 	error = 0.0
@@ -99,6 +105,7 @@ Program Main
 	If(myid .EQ. 0) write(6,'(a)') "Starting Calculation ... "
 
 ! Start the time counter
+	Call MPI_Barrier(MPI_COMM_WORLD,ierr)
 	time_start = MPI_Wtime()
 
 ! Start the time iteration
@@ -162,9 +169,8 @@ Program Main
 			
     Enddo
 	
-    Call MPI_Barrier(MPI_COMM_WORLD,ierr)
-	
 ! Stop time count and calculate elapsed time
+	Call MPI_Barrier(MPI_COMM_WORLD,ierr)
 	time_end = MPI_Wtime()
 	time_elapsed = time_end - time_start
 	
@@ -172,21 +178,21 @@ Program Main
 	
 ! Calculate error from exact solution to check the results
 	Do i = start_indx,end_indx
-		error = error + (T_new(i) - T_exact)**2
+		error = error + ABS(T_new(i) - T_exact)
 	Enddo
-	error = SQRT(error)/npts_local
+	error = (error/npts_local)
 	Call MPI_Reduce(error,error_max,1,MPI_DOUBLE_PRECISION,MPI_MAX,0,MPI_COMM_WORLD,ierr)
 
 ! Print out elapsed time
 	If(myid .EQ. 0) then
-		write(6,'(a,f12.4)') "The RMS Error is: ",error_max
-		write(6,'(a,f12.4,a)') "The Elapsed time is: ",time_elapsed," seconds"
+		write(6,'(a,ES12.5)') "The RMS Error is: ",error_max
+		write(6,'(a,ES12.5,a)') "The Elapsed time is: ",time_elapsed," seconds"
 	Endif
 	
-    If(debug_version .EQ. 1) then
+    If((debug_version .EQ. 1) .AND. (print_result .EQ. 1)) then
         If(myid .EQ. 0) write(6,'(a75)') " --------------------------- Final Answer -------------------------- "
             Do i=start_indx,end_indx
-                write(6,'(a34,I0,a,F12.4)') "T(",i,") = ",T_new(i)
+                write(6,'(a34,I0,a,ES12.5)') "T(",i,") = ",T_new(i)
             Enddo
     Endif
 
