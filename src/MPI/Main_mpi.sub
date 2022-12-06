@@ -1,0 +1,9 @@
+#!/bin/bash
+# FILENAME: Main_mpi.sub
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH -t 00:05:00
+#SBATCH -A scholar
+#SBATCH -o "Output_Main_mpi.txt"
+
+srun --mpi=pmi2 -n 1 ./Main_mpi

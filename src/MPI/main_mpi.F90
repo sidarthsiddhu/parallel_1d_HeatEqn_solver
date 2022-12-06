@@ -28,7 +28,7 @@ Program Main
 	
 ! Set the problem parameters	
 	ntime = 10
-    npts = 5*(10**8)
+    npts = 3*(10**8)
     dx = 1e-03
 	dt = 1e-03
 	r = 0.5
