@@ -1,18 +1,83 @@
        --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] --- 
        --------------------- Problem Parameters -------------------------- 
-                          Length:  3.00000E+05 meters
+                          Length:  1.00000E+06 meters
            Total simulation time:  1.00000E-02 seconds
                               dt:  1.00000E-03 seconds
                               dx:  1.00000E-03 meters
-      Number of points (spatial): 300000000 Point(s)
+      Number of points (spatial): 1000000000 Point(s)
            Number of time steps : 10 Step(s)
              Thermal Diffusivity:  5.00000E-04 m^2/s
                R(alpha*dt/dx^2) :  5.00000E-01
            Number of Processors : 1 Processor(s)
  
-Id: 0 || Start: 1 || End: 300000000 || npts_local: 300000000
-The Initial RMS Error is:  5.00000E+01
+Id: 0 || Start: 1 || End: 1000000000 || npts_local: 1000000000
+The initial average Error is:  5.00000E+01
 Starting Calculation ... 
-slurmstepd: error: Detected 1 oom-kill event(s) in step 195314.0 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
-srun: error: scholar-a005: task 0: Out Of Memory
-slurmstepd: error: Detected 1 oom-kill event(s) in step 195314.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+Calculation Complete
+The average Error is:  5.00000E+01
+The Elapsed time is:  2.57931E+01 seconds
+       --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] --- 
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+06 meters
+           Total simulation time:  1.00000E-02 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 1000000000 Point(s)
+           Number of time steps : 10 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 2 Processor(s)
+ 
+Id: 0 || Start: 1 || End: 500000000 || npts_local: 500000000
+Id: 1 || Start: 500000001 || End: 1000000000 || npts_local: 500000000
+The initial average Error is:  5.00000E+01
+Starting Calculation ... 
+Calculation Complete
+The average Error is:  5.00000E+01
+The Elapsed time is:  1.13470E+01 seconds
+       --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] --- 
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+06 meters
+           Total simulation time:  1.00000E-02 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 1000000000 Point(s)
+           Number of time steps : 10 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 4 Processor(s)
+ 
+Id: 0 || Start: 1 || End: 250000000 || npts_local: 250000000
+Id: 1 || Start: 250000001 || End: 500000000 || npts_local: 250000000
+Id: 2 || Start: 500000001 || End: 750000000 || npts_local: 250000000
+Id: 3 || Start: 750000001 || End: 1000000000 || npts_local: 250000000
+The initial average Error is:  5.00000E+01
+Starting Calculation ... 
+Calculation Complete
+The average Error is:  5.00000E+01
+The Elapsed time is:  6.51834E+00 seconds
+       --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] --- 
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+06 meters
+           Total simulation time:  1.00000E-02 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 1000000000 Point(s)
+           Number of time steps : 10 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 8 Processor(s)
+ 
+Id: 0 || Start: 1 || End: 125000000 || npts_local: 125000000
+Id: 1 || Start: 125000001 || End: 250000000 || npts_local: 125000000
+Id: 6 || Start: 750000001 || End: 875000000 || npts_local: 125000000
+Id: 7 || Start: 875000001 || End: 1000000000 || npts_local: 125000000
+Id: 2 || Start: 250000001 || End: 375000000 || npts_local: 125000000
+Id: 3 || Start: 375000001 || End: 500000000 || npts_local: 125000000
+Id: 4 || Start: 500000001 || End: 625000000 || npts_local: 125000000
+Id: 5 || Start: 625000001 || End: 750000000 || npts_local: 125000000
+The initial average Error is:  5.00000E+01
+Starting Calculation ... 
+Calculation Complete
+The average Error is:  5.00000E+01
+The Elapsed time is:  5.16972E+00 seconds

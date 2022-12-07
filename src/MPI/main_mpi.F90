@@ -28,7 +28,7 @@ Program Main
 	
 ! Set the problem parameters	
 	ntime = 10
-    npts = 3*(10**8)
+    npts = 10**9
     dx = 1e-03
 	dt = 1e-03
 	r = 0.5
@@ -83,9 +83,10 @@ Program Main
     Allocate(T_new(start_indx:end_indx))
 
 ! Set initial condition
-    Do i=start_indx,end_indx
-        T_new(i) = T_initial
-    Enddo
+    !Do i=start_indx,end_indx
+    !    T_new(i) = T_initial
+    !Enddo
+    T_new(:) = T_initial
 	
 ! Set boundary condition
     If(myid .EQ. 0) T_new(start_indx) = T_left
@@ -97,7 +98,7 @@ Program Main
 	Enddo
 	error = (error/npts_local)
 	Call MPI_Reduce(error,error_max,1,MPI_DOUBLE_PRECISION,MPI_MAX,0,MPI_COMM_WORLD,ierr)
-	If(myid .EQ. 0) write(6,'(a,ES12.5)') "The Initial RMS Error is: ",error_max
+	If(myid .EQ. 0) write(6,'(a,ES12.5)') "The initial average Error is: ",error_max
 	
 ! Reset Error value for final calculation
 	error = 0.0
@@ -112,10 +113,11 @@ Program Main
     Do it = 2,ntime
     
 	! Set T_old = T_new
-		Do i=start_indx,end_indx
+		!Do i=start_indx,end_indx
 			T_old(i) = T_new(i)
-		Enddo
-
+		!Enddo
+		T_old = T_new
+		
 	! Pass the details of the ghostg points to the neighbours		
 		If(nprocs .GT. 1) then
 		
@@ -185,7 +187,7 @@ Program Main
 
 ! Print out elapsed time
 	If(myid .EQ. 0) then
-		write(6,'(a,ES12.5)') "The RMS Error is: ",error_max
+		write(6,'(a,ES12.5)') "The average Error is: ",error_max
 		write(6,'(a,ES12.5,a)') "The Elapsed time is: ",time_elapsed," seconds"
 	Endif
 	
