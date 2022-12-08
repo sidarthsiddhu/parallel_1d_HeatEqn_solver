@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --job-name=MPI_16
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=2
+#SBATCH -t 00:20:00
+#SBATCH -A scholar
+#SBATCH --mail-user=naraya71@purdue.edu
+#SBATCH --mail-type=ALL
+#SBATCH -o "Output_Main_MPI_16.txt"
+
+srun --mpi=pmi2 -n 16 ./Main_MPI

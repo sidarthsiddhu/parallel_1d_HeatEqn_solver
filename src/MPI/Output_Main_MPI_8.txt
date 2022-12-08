@@ -1,0 +1,50 @@
+ 
+ 
+       --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] --- 
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+05 meters
+           Total simulation time:  1.00000E+00 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 100000000 Point(s)
+           Number of time steps : 1000 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 8 Processor(s)
+ 
+forrtl: severe (174): SIGSEGV, segmentation fault occurred
+Image              PC                Routine            Line        Source             
+Main_MPI           0000000000406673  Unknown               Unknown  Unknown
+libpthread-2.17.s  00002AB7060F4630  Unknown               Unknown  Unknown
+librxm-fi.so       00002AB78E242359  Unknown               Unknown  Unknown
+librxm-fi.so       00002AB78E24493B  Unknown               Unknown  Unknown
+librxm-fi.so       00002AB78E24502D  Unknown               Unknown  Unknown
+librxm-fi.so       00002AB78E2451C2  Unknown               Unknown  Unknown
+librxm-fi.so       00002AB78E24B1E7  Unknown               Unknown  Unknown
+libmpi.so.12.0.0   00002AB704D543B4  Unknown               Unknown  Unknown
+libmpi.so.12.0.0   00002AB704DAF16B  Unknown               Unknown  Unknown
+libmpi.so.12.0.0   00002AB704DAEDD0  MPI_Barrier           Unknown  Unknown
+libmpifort.so.12.  00002AB7048756BC  pmpi_barrier          Unknown  Unknown
+forrtl: severe (174): SIGSEGV, segmentation fault occurred
+Image              PC                Routine            Line        Source             
+Main_MPI           0000000000406673  Unknown               Unknown  Unknown
+libpthread-2.17.s  00002B10D7B8E630  Unknown               Unknown  Unknown
+librxm-fi.so       00002B115FCDC359  Unknown               Unknown  Unknown
+librxm-fi.so       00002B115FCDE93B  Unknown               Unknown  Unknown
+librxm-fi.so       00002B115FCDF02D  Unknown               Unknown  Unknown
+librxm-fi.so       00002B115FCDF1C2  Unknown               Unknown  Unknown
+librxm-fi.so       00002B115FCE51E7  Unknown               Unknown  Unknown
+libmpi.so.12.0.0   00002B10D67EE3B4  Unknown               Unknown  Unknown
+libmpi.so.12.0.0   00002B10D684916B  Unknown               Unknown  Unknown
+libmpi.so.12.0.0   00002B10D6848DD0  MPI_Barrier           Unknown  Unknown
+libmpifort.so.12.  00002B10D630F6BC  pmpi_barrier          Unknown  Unknown
+Main_MPI           0000000000404679  Unknown               Unknown  Unknown
+Main_MPI           0000000000403F62  Unknown               Unknown  Unknown
+libc-2.17.so       00002AB706625555  __libc_start_main     Unknown  Unknown
+Main_MPI           0000000000403E69  Unknown               Unknown  Unknown
+Main_MPI           0000000000404679  Unknown               Unknown  Unknown
+Main_MPI           0000000000403F62  Unknown               Unknown  Unknown
+libc-2.17.so       00002B10D80BF555  __libc_start_main     Unknown  Unknown
+Main_MPI           0000000000403E69  Unknown               Unknown  Unknown
+srun: error: scholar-b001: task 4: Exited with exit code 174
+srun: error: scholar-b000: task 2: Exited with exit code 174
