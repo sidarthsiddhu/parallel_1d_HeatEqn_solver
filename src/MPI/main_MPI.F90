@@ -10,8 +10,8 @@ Program Main
     Integer(kind=8) :: npts,ntime,it,i,npts_local
     Integer(kind=8) :: start_indx,end_indx
     Real(kind=8),Allocatable,Dimension(:) :: T_old,T_new
-    Real(kind=8) :: Total_time,length,dx,dt,alpha,r
-    Real(kind=8) :: T_left,T_right,T_initial
+    Real(kind=8) :: Total_time,length,dx,dt,alpha,r,k
+    Real(kind=8) :: T_left,T_right,T_initial,iter_time_start,iter_time_end,iter_time
     Real(kind=8) :: ghost_left,ghost_right,time_start,time_end,time_elapsed
     Integer :: ierr,myid,nprocs,remeinder
     Integer,Dimension(MPI_STATUS_SIZE) :: status_right,status_left
@@ -23,11 +23,12 @@ Program Main
 
 ! Set the problem parameters	
 	ntime = 1000
-    npts = 10**6
+    npts = 10**8
     dx = 1e-03
 	dt = 1e-03
 	r = 0.5
 	alpha = r*(dx**2)/dt
+	k = 1e-03
     T_left = 0.0 
     T_right = 0.0
     T_initial = 50.0
@@ -97,6 +98,9 @@ Program Main
     
 	! Print Iteration number
 		!if(myid .EQ. 0) write(6,'(a,I2,a)') "Runnnig Iteration ",it," ..."
+		
+	! Time one of the iteration
+		If(it .EQ. ntime/2) iter_time_start = MPI_Wtime()
 	
 	! Set T_old = T_new
 		Do i=start_indx,end_indx
@@ -123,8 +127,10 @@ Program Main
 					If(i .EQ. end_indx) then
 					! End point uses right ghost node	
 						T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*ghost_right
+						T_new(i) = T_new(i) - (k/t_new(i))
 					Else
 						T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
+						T_new(i) = T_new(i) - (k/t_new(i))
 					Endif
 				Enddo
 			Elseif(myid .EQ. (nprocs-1)) then
@@ -133,8 +139,10 @@ Program Main
 					If(i .EQ. start_indx) then
 					! Start point uses left ghost node
 						T_new(i) = r*ghost_left + (1-(2*r))*T_old(i) + r*T_old(i+1)
+						T_new(i) = T_new(i) - (k/t_new(i))
 					Else
 						T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
+						T_new(i) = T_new(i) - (k/t_new(i))
 					Endif
 				Enddo
 			Else
@@ -143,11 +151,14 @@ Program Main
 					If(I .EQ. start_indx) then
 					! Start point uses left ghost node
 						T_new(i) = r*ghost_left + (1-(2*r))*T_old(i) + r*T_old(i+1)
+						T_new(i) = T_new(i) - (k/t_new(i))
 					Elseif(i .EQ. end_indx) then
 					! End point uses right ghost node
 						T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*ghost_right
+						T_new(i) = T_new(i) - (k/t_new(i))
 					Else
 						T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
+						T_new(i) = T_new(i) - (k/t_new(i))
 					Endif
 				Enddo
 			Endif
@@ -155,8 +166,11 @@ Program Main
 		! Basic Calculation for just 1 element without message passing
 			Do i=start_indx+1,end_indx-1
 				T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
+				T_new(i) = T_new(i) - (k/t_new(i))
 			Enddo
 		Endif
+		
+		If(it .EQ. ntime/2) iter_time_end = MPI_Wtime()
 			
     Enddo
 	
@@ -164,13 +178,14 @@ Program Main
 	Call MPI_Barrier(MPI_COMM_WORLD,ierr)
 	time_end = MPI_Wtime()
 	time_elapsed = time_end - time_start
+	iter_time = iter_time_end - iter_time_start
 
 ! Print out elapsed time	
 	If(myid .EQ. 0) then
 		write(6,'(a)') "Calculation Complete"
 		write(6,'(a)') " "
-		write(6,'(a)') " "
-		write(6,'(a,ES12.5,a)') "The elapsed time is: ",time_elapsed," seconds"
+		write(6,'(a,ES12.5,a)') " The time per iteration is: ",iter_time," seconds"
+		write(6,'(a,ES12.5,a)') "The total elapsed time is: ",time_elapsed," seconds"
 	Endif
 	
 ! Deallocate Variables	

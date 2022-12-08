@@ -2,7 +2,7 @@
 #SBATCH --job-name=MPI_1
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH -t 00:20:00
+#SBATCH -t 00:10:00
 #SBATCH -A scholar
 #SBATCH --mail-user=naraya71@purdue.edu
 #SBATCH --mail-type=ALL
