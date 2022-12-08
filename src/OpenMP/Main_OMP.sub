@@ -6,7 +6,7 @@
 #SBATCH -A scholar
 #SBATCH --mail-user=naraya71@purdue.edu
 #SBATCH --mail-type=ALL
-#SBATCH -o "Output_Main_OMP_all.txt"
+#SBATCH -o "Output_Main_OMP_all_Default(static).txt"
 
 export OMP_NUM_THREADS=1
 ./Main_OMP
