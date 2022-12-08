@@ -9,8 +9,7 @@ Program Main
     Implicit None
 
     Integer(kind=8) :: npts,ntime,it,i
-    Real,Allocatable,Dimension(:) :: T_old,T_new,T_exact
-    Real,Allocatable,Dimension(:) :: x,t
+    Real,Allocatable,Dimension(:) :: T_old,T_new
     Real(kind=8) :: Total_time,length,dx,dt,alpha,r
     Real(kind=8) :: T_left,T_right,T_initial
     Integer :: request_left,request_right,ierr,myid,nprocs,debug_version
@@ -18,29 +17,26 @@ Program Main
 
 ! Set the problem parameters
     debug_version = 0
-    length = 1.0
-    Total_time = 1.0
-    npts = 1000000
-    ntime = 100000
-    alpha = 0.001
+    ntime = 1000
+    npts = 10**8
+    dx = 1e-03
+	dt = 1e-03
+	r = 0.5
+	alpha = r*(dx**2)/dt
     T_left = 0.0 
-    T_right = 100.0
-    T_initial = 25.0
-    dx = length/real(npts)
-    dt = Total_time/real(ntime)
-    r = (alpha*dt)/(dx*dx)
+    T_right = 0.0
+    T_initial = 50.0
+	
+	length = real(npts)*dx
+	Total_time = real(ntime)*dt
 
 ! Allocate the variables
     Allocate(T_old(npts))
     Allocate(T_new(npts))
-    Allocate(T_exact(npts))
-    Allocate(x(npts))
-    Allocate(t(ntime))
 
 ! Set initial condition
     Do i=1,npts
         T_new(i) = T_initial + i
-        x(i) = (i-1)*dx
     Enddo
 
 ! Set boundary condition
@@ -83,8 +79,5 @@ Program Main
 
     Deallocate(T_old)
     Deallocate(T_new)
-    Deallocate(T_exact)
-    Deallocate(x)
-    Deallocate(t)
 
 End Program Main
