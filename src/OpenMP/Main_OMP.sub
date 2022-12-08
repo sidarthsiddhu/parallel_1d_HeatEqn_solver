@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --job-name=OMP_1
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=20
+#SBATCH -t 00:20:00
+#SBATCH -A scholar
+#SBATCH --mail-user=naraya71@purdue.edu
+#SBATCH --mail-type=ALL
+#SBATCH -o "Output_Main_OMP_all_Default(static).txt"
+
+export OMP_NUM_THREADS=1
+./Main_OMP
+export OMP_NUM_THREADS=2
+./Main_OMP
+export OMP_NUM_THREADS=4
+./Main_OMP
+export OMP_NUM_THREADS=8
+./Main_OMP
+export OMP_NUM_THREADS=16
+./Main_OMP

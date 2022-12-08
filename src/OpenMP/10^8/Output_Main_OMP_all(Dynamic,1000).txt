@@ -1,0 +1,80 @@
+ 
+ 
+ -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+05 meters
+           Total simulation time:  1.00000E+00 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 100000000 Point(s)
+           Number of time steps : 1000 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 1 Processor(s)
+ 
+Time taken to solve 1 iteration is:      0.26875 seconds
+Total time taken to solve:    269.11729 seconds
+ 
+ 
+ -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+05 meters
+           Total simulation time:  1.00000E+00 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 100000000 Point(s)
+           Number of time steps : 1000 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 2 Processor(s)
+ 
+Time taken to solve 1 iteration is:      0.17913 seconds
+Total time taken to solve:    179.24590 seconds
+ 
+ 
+ -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+05 meters
+           Total simulation time:  1.00000E+00 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 100000000 Point(s)
+           Number of time steps : 1000 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 4 Processor(s)
+ 
+Time taken to solve 1 iteration is:      0.09292 seconds
+Total time taken to solve:     91.11687 seconds
+ 
+ 
+ -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+05 meters
+           Total simulation time:  1.00000E+00 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 100000000 Point(s)
+           Number of time steps : 1000 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 8 Processor(s)
+ 
+Time taken to solve 1 iteration is:      0.05276 seconds
+Total time taken to solve:     52.93884 seconds
+ 
+ 
+ -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
+       --------------------- Problem Parameters -------------------------- 
+                          Length:  1.00000E+05 meters
+           Total simulation time:  1.00000E+00 seconds
+                              dt:  1.00000E-03 seconds
+                              dx:  1.00000E-03 meters
+      Number of points (spatial): 100000000 Point(s)
+           Number of time steps : 1000 Step(s)
+             Thermal Diffusivity:  5.00000E-04 m^2/s
+               R(alpha*dt/dx^2) :  5.00000E-01
+           Number of Processors : 16 Processor(s)
+ 
+Time taken to solve 1 iteration is:      0.03959 seconds
+Total time taken to solve:     39.70353 seconds

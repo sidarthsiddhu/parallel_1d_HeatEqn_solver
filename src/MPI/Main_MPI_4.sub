@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --job-name=MPI_4
+#SBATCH --ntasks=4
+#SBATCH --ntasks-per-socket=1
+#SBATCH -t 00:10:00
+#SBATCH -A scholar
+#SBATCH --mail-user=naraya71@purdue.edu
+#SBATCH --mail-type=ALL
+#SBATCH -o "Output_Main_MPI_4.txt"
+
+srun --mpi=pmi2 -n 4 ./Main_MPI
