@@ -23,7 +23,7 @@ Program Main
 
 ! Set the problem parameters	
 	ntime = 1000
-    npts = 10**8
+    npts = 10**6
     dx = 1e-03
 	dt = 1e-03
 	r = 0.5
