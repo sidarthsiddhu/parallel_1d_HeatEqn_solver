@@ -18,7 +18,7 @@ Program Main
 ! Set the problem parameters
     debug_version = 0
     ntime = 1000
-    npts = 10**7
+    npts = 10**8
     dx = 1e-03
 	dt = 1e-03
 	r = 0.5
@@ -76,13 +76,13 @@ Program Main
 	
 	if(it .EQ. ntime/2) time_taken_per_iteration = -1.0*omp_get_wtime()
 	
-	!$OMP PARALLEL DO PRIVATE(i)
+	!$OMP PARALLEL DO PRIVATE(i) SCHEDULE(GUIDED)
 	Do i=2,npts-1
 		T_old(i) = T_new(i)
 	Enddo
 	!$OMP END PARALLEL DO
 		
-	!$OMP PARALLEL DO PRIVATE(i)
+	!$OMP PARALLEL DO PRIVATE(i) SCHEDULE(GUIDED)
         Do i=2,npts-1
             T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
             T_new(i) = T_new(i) + (dt*k/T_new(i))
