@@ -18,7 +18,7 @@ Program Main
 ! Set the problem parameters
     debug_version = 0
     ntime = 1000
-    npts = 1000000
+    npts = 10**7
     dx = 1e-03
 	dt = 1e-03
 	r = 0.5
@@ -52,8 +52,8 @@ Program Main
 	write(6,*) ""
 
 ! Set initial condition
-	Do i=1,npts
-    		T_new(:) = T_initial
+	Do i=2,npts-1
+    		T_new(i) = T_initial
 	Enddo
 
 ! Set boundary condition

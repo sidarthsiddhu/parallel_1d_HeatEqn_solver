@@ -23,7 +23,7 @@ Program Main
 ! Set the problem parameters
 	debug_version = 0	
 	ntime = 1000
-    npts = 10**7
+    npts = 10**8
     dx = 1e-03
 	dt = 1e-03
 	r = 0.5
@@ -55,7 +55,6 @@ Program Main
 		Call flush(6)
 	Endif
 	
-	!Call MPI_Barrier(MPI_COMM_WORLD,ierr)
 
 ! Split the domain among the processors in a load balanced method 
     npts_local = npts/nprocs
@@ -116,6 +115,8 @@ Program Main
 			If(myid .LT. nprocs-1)	Call MPI_Send(T_new(npts_local),1,MPI_DOUBLE_PRECISION,myid+1,1,MPI_COMM_WORLD,ierr)
 		! Recieve the left ghost element
 			If(myid .GT. 0) Call MPI_Recv(ghost_left,1,MPI_DOUBLE_PRECISION,myid-1,1,MPI_COMM_WORLD,status_left,ierr)
+			
+		Call MPI_Barrier(MPI_COMM_WORLD,ierr)
 		
 		! Do the actual calculation point by point
 			If(myid .EQ. 0) then

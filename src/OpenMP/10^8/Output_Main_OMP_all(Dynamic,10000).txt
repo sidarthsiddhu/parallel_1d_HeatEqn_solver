@@ -12,8 +12,8 @@
                R(alpha*dt/dx^2) :  5.00000E-01
            Number of Processors : 1 Processor(s)
  
-Time taken to solve 1 iteration is:      0.26875 seconds
-Total time taken to solve:    269.11729 seconds
+Time taken to solve 1 iteration is:      0.27107 seconds
+Total time taken to solve:    269.08626 seconds
  
  
  -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
@@ -28,8 +28,8 @@ Total time taken to solve:    269.11729 seconds
                R(alpha*dt/dx^2) :  5.00000E-01
            Number of Processors : 2 Processor(s)
  
-Time taken to solve 1 iteration is:      0.17913 seconds
-Total time taken to solve:    179.24590 seconds
+Time taken to solve 1 iteration is:      0.15832 seconds
+Total time taken to solve:    162.23437 seconds
  
  
  -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
@@ -44,8 +44,8 @@ Total time taken to solve:    179.24590 seconds
                R(alpha*dt/dx^2) :  5.00000E-01
            Number of Processors : 4 Processor(s)
  
-Time taken to solve 1 iteration is:      0.09292 seconds
-Total time taken to solve:     91.11687 seconds
+Time taken to solve 1 iteration is:      0.09468 seconds
+Total time taken to solve:     83.69122 seconds
  
  
  -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
@@ -60,8 +60,8 @@ Total time taken to solve:     91.11687 seconds
                R(alpha*dt/dx^2) :  5.00000E-01
            Number of Processors : 8 Processor(s)
  
-Time taken to solve 1 iteration is:      0.05276 seconds
-Total time taken to solve:     52.93884 seconds
+Time taken to solve 1 iteration is:      0.04651 seconds
+Total time taken to solve:     46.69566 seconds
  
  
  -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [OpenMP] --
@@ -76,5 +76,5 @@ Total time taken to solve:     52.93884 seconds
                R(alpha*dt/dx^2) :  5.00000E-01
            Number of Processors : 16 Processor(s)
  
-Time taken to solve 1 iteration is:      0.03959 seconds
-Total time taken to solve:     39.70353 seconds
+Time taken to solve 1 iteration is:      0.03314 seconds
+Total time taken to solve:     33.18322 seconds

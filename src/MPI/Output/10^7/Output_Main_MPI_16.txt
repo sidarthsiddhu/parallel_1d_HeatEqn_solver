@@ -1,6 +1,6 @@
  
  
-       --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] --- 
+ --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [MPI] --- 
        --------------------- Problem Parameters -------------------------- 
                           Length:  1.00000E+04 meters
            Total simulation time:  1.00000E+00 seconds
@@ -27,5 +27,5 @@ Runnnig Iteration 900 ...
 Runnnig Iteration 1000 ...
 Calculation Complete
  
- The time per iteration is:  1.77789E-03 seconds
-The total elapsed time is:  1.88736E+00 seconds
+ The time per iteration is:  2.48766E-03 seconds
+The total elapsed time is:  2.61075E+00 seconds

@@ -1,6 +1,6 @@
  
  
- --- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [MPI] --- 
+ -- Parallel 1-D Heat Equation Solver [dT/dt = alpha*(d2T/dx2)] [Sequential
        --------------------- Problem Parameters -------------------------- 
                           Length:  1.00000E+04 meters
            Total simulation time:  1.00000E+00 seconds
@@ -10,10 +10,6 @@
            Number of time steps : 1000 Step(s)
              Thermal Diffusivity:  5.00000E-04 m^2/s
                R(alpha*dt/dx^2) :  5.00000E-01
-           Number of Processors : 8 Processor(s)
- 
-Starting Calculation
- 
  
 Runnnig Iteration 100 ...
 Runnnig Iteration 200 ...
@@ -25,7 +21,5 @@ Runnnig Iteration 700 ...
 Runnnig Iteration 800 ...
 Runnnig Iteration 900 ...
 Runnnig Iteration 1000 ...
-Calculation Complete
- 
- The time per iteration is:  4.76675E-03 seconds
-The total elapsed time is:  3.88798E+00 seconds
+Total Time taken:  2.68245E+01 seconds
+Time taken per iteration:  2.67910E-02 seconds

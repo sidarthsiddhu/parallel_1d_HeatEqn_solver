@@ -76,13 +76,13 @@ Program Main
 	
 	if(it .EQ. ntime/2) time_taken_per_iteration = -1.0*omp_get_wtime()
 	
-	!$OMP PARALLEL DO PRIVATE(i) SCHEDULE(GUIDED)
+	!$OMP PARALLEL DO PRIVATE(i) SCHEDULE(DYNAMIC,10000)
 	Do i=2,npts-1
 		T_old(i) = T_new(i)
 	Enddo
 	!$OMP END PARALLEL DO
 		
-	!$OMP PARALLEL DO PRIVATE(i) SCHEDULE(GUIDED)
+	!$OMP PARALLEL DO PRIVATE(i) SCHEDULE(DYNAMIC,10000)
         Do i=2,npts-1
             T_new(i) = r*T_old(i-1) + (1-(2*r))*T_old(i) + r*T_old(i+1)
             T_new(i) = T_new(i) + (dt*k/T_new(i))
